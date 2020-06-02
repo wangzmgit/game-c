@@ -1,5 +1,4 @@
 #include<graphics.h>
-#include <stdio.h>
 #define MaxWidth 1990
 #define TopMargin 300
 #define BottomMargin 520
@@ -8,17 +7,18 @@ IMAGE imgTouch[2];//触发位置图片
 IMAGE imgNPC[1][2];//NPC
 IMAGE imgDialogBox;//对话框
 IMAGE backgroundTown;//背景图
-int backgroundX = 0;
-int walkStopDelay;//走路停止延迟
+int backgroundTownX = 0;
+extern int walkStopDelay;//走路停止延迟
 extern int speedX, speedY;//速度
 extern int playerX, playerY;//玩家坐标
 extern int direction;//玩家方向
 extern int leftMargin, rightMargin;
 /***********************函数声明*************************/
-void load();
-void showTown();
+void load_town();
+void show_town();
 void Stand();//站立动画，位于player
 void walk();//行走动画，位于player
+void forest();//森林场景
 void touchSite();
 void clickContinue();
 void updateWithInput_town();
@@ -28,10 +28,10 @@ void staticResourceLoading();
 /// </summary>
 void town()
 {
-	load();
+	load_town();
 	while (true)
 	{
-		showTown();
+		show_town();
 		updateWithInput_town();
 		Sleep(20);
 	}
@@ -39,7 +39,7 @@ void town()
 /// <summary>
 /// 加载
 /// </summary>
-void load()
+void load_town()
 {	
 	playerX = 250;
 	playerY = 450;
@@ -54,7 +54,7 @@ void load()
 /// <summary>
 /// 显示
 /// </summary>
-void showTown()
+void show_town()
 {
 	staticResourceLoading();
 	if (speedX == 0&&speedY==0)
@@ -95,14 +95,14 @@ void updateWithInput_town()
 		if (playerX >= leftMargin)
 		{
 			playerX += speedX;
-			if (backgroundX > 0)
-				backgroundX += speedX;
+			if (backgroundTownX > 0)
+				backgroundTownX += speedX;
 		}
 		else
 		{
 			playerX = leftMargin;
-			if (backgroundX > 0)
-				backgroundX += (2 * speedX);
+			if (backgroundTownX > 0)
+				backgroundTownX += (2 * speedX);
 		}
 		walkStopDelay = 1;
 	}
@@ -113,14 +113,14 @@ void updateWithInput_town()
 		if (playerX<=rightMargin)
 		{			
 			playerX += speedX;
-			if(backgroundX <MaxWidth)
-				backgroundX += speedX;
+			if(backgroundTownX <MaxWidth)
+				backgroundTownX += speedX;
 		}
 		else
 		{
 			playerX = rightMargin;
-			if (backgroundX <MaxWidth)
-				backgroundX += (2*speedX);
+			if (backgroundTownX <MaxWidth)
+				backgroundTownX += (2*speedX);
 		}
 		walkStopDelay = 1;
 	}
@@ -149,12 +149,12 @@ void updateWithInput_town()
 void staticResourceLoading()
 {
 	//BeginBatchDraw();
-	putimage(0, 0, 900, 600, &backgroundTown, backgroundX, 0);
+	putimage(0, 0, 900, 600, &backgroundTown, backgroundTownX, 0);
 	//左一NPC和触发光圈
-	putimage(420 - backgroundX, 270, &imgNPC[0][0], NOTSRCERASE);
-	putimage(420 - backgroundX, 270, &imgNPC[0][1], SRCINVERT);
-	putimage(445 - backgroundX, 365, &imgTouch[0], NOTSRCERASE);
-	putimage(445 - backgroundX, 365, &imgTouch[1], SRCINVERT);
+	putimage(420 - backgroundTownX, 270, &imgNPC[0][0], NOTSRCERASE);
+	putimage(420 - backgroundTownX, 270, &imgNPC[0][1], SRCINVERT);
+	putimage(445 - backgroundTownX, 365, &imgTouch[0], NOTSRCERASE);
+	putimage(445 - backgroundTownX, 365, &imgTouch[1], SRCINVERT);
 	//EndBatchDraw();
 }
 
@@ -163,10 +163,11 @@ void staticResourceLoading()
 /// </summary>
 void touchSite()
 {
-	if (playerX > (430 - backgroundX) && playerX < (480 - backgroundX)&&playerY<325)
+	if (playerX > (430 - backgroundTownX) && playerX < (480 - backgroundTownX)&&playerY<325)
 	{
 		if ((GetAsyncKeyState(VK_TAB) & 0x8000))
 		{
+			forest();
 			putimage(10, 395, &imgDialogBox);
 			setbkmode(TRANSPARENT);
 

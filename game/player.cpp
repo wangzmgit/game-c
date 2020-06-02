@@ -2,15 +2,21 @@
 
 extern IMAGE imgStand[2];//角色站立
 extern IMAGE imgWalk[2];//角色移动
+extern IMAGE imgAttack[2][4];//攻击
 extern int playerX, playerY;
 extern int speedX, speedY;//速度
 extern int direction;//玩家方向
+extern int isAttack;//是否攻击
 int standFrames;//站立帧数
 int standVar = 0;//站立变量
 int walkFrames;//走路帧数
 int walkVar;//走路变量
-
-
+int walkStopDelay;//走路停止延迟
+int attackType = 0;//攻击类型
+int attackFrames = 0;//攻击帧数
+int attackDelay[4] = { 30,30,30,40 };//不同攻击的延迟
+int attackX[4] = { 86,90,113,116 }; //攻击图像y的调整
+int attackY[4] = { 86,76,72,94 }; //攻击图像y的调整
 /// <summary>
 /// 站立动画
 /// </summary>
@@ -47,4 +53,21 @@ void walk()
 		if (walkVar == 4 * walkFrames)
 			walkVar = 0;
 	}
+}
+
+/// <summary>
+/// 攻击动画
+/// </summary>
+void attack()
+{
+	putimage(playerX, playerY- attackY[attackType]+76, attackX[attackType], attackY[attackType], &imgAttack[0][attackType], attackFrames / 10 * attackX[attackType], direction * attackY[attackType], SRCAND);
+	putimage(playerX, playerY - attackY[attackType]+76, attackX[attackType], attackY[attackType], &imgAttack[1][attackType], attackFrames / 10 * attackX[attackType], direction * attackY[attackType], SRCPAINT);
+	attackFrames++;
+	if (attackFrames == attackDelay[attackType])
+	{
+		attackFrames = 0;
+		attackType = rand() % 4;
+		isAttack = 0;
+	}
+	FlushBatchDraw();
 }
