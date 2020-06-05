@@ -4,6 +4,7 @@
 目前已经实现了角色的移动，背景的移动，随机刷怪，攻击，击倒敌人获得金币等功能
 
 ##图片
-![城镇1](https://github.com/wangzmgit/game-c/images/Screenshot/town_1.png）
-![城镇2](https://github.com/wangzmgit/game-c/images/Screenshot/town_2.png）
-![森林](https://github.com/wangzmgit/game-c/images/Screenshot/forest.png）
+
+![城镇1](/images/Screenshot/town_1.png）
+![城镇2](/images/Screenshot/town_2.png）
+![森林](/images/Screenshot/forest.png）
