@@ -14,9 +14,10 @@ extern int playerX, playerY;//玩家坐标
 extern int direction;//玩家方向
 extern int leftMargin, rightMargin;
 /***********************函数声明*************************/
+
 void load_town();
 void show_town();
-void Stand();//站立动画，位于player
+void stand();//站立动画，位于player
 void walk();//行走动画，位于player
 void forest();//森林场景
 void touchSite();
@@ -37,7 +38,7 @@ void town()
 	}
 }
 /// <summary>
-/// 加载
+/// 加载资源
 /// </summary>
 void load_town()
 {	
@@ -59,7 +60,7 @@ void show_town()
 	staticResourceLoading();
 	if (speedX == 0&&speedY==0)
 	{
-		Stand();
+		stand();
 	}
 	else if(speedX!=0||speedY!=0)
 	{
@@ -159,7 +160,7 @@ void staticResourceLoading()
 }
 
 /// <summary>
-/// 触发对话框
+/// 触发对话
 /// </summary>
 void touchSite()
 {
@@ -167,24 +168,26 @@ void touchSite()
 	{
 		if ((GetAsyncKeyState(VK_TAB) & 0x8000))
 		{
-			forest();
 			putimage(10, 395, &imgDialogBox);
 			setbkmode(TRANSPARENT);
 
-			outtextxy(50, 470,_T("你好"));//输出文字
+			outtextxy(30, 410, _T("人物名称"));
+			outtextxy(50, 470,_T("对话内容"));//输出文字
+			clickContinue();
+			outtextxy(50, 500, _T("对话内容"));//输出文字
 			clickContinue();//等待鼠标点击
 			putimage(10, 395, &imgDialogBox);//重新加载对话框
-
-			outtextxy(50, 470, _T("需要买点什么"));
-			clickContinue();
-			putimage(10, 395, &imgDialogBox);
 			
+			outtextxy(30, 410, _T("我"));
 			outtextxy(50, 470, _T("..."));
 			clickContinue();
 			putimage(10, 395, &imgDialogBox);
 
-			outtextxy(50, 470, _T("再见"));
+			outtextxy(50, 470, _T("前往森林"));
 			clickContinue();
+
+			cleardevice();
+			forest();
 		}	
 	}
 }
@@ -200,6 +203,7 @@ void clickContinue()
 		m = GetMouseMsg();
 		if (m.uMsg == WM_LBUTTONDOWN)
 			return;
+		Sleep(10);
 	}
 }
 

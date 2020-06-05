@@ -1,5 +1,5 @@
 #include<graphics.h>
-#include<conio.h>
+#include <time.h>
 
 #define Width 900 //界面宽度
 #define Height 600 //界面高度
@@ -7,21 +7,26 @@
 IMAGE imgStand[2];//角色站立
 IMAGE imgWalk[2];//角色移动
 IMAGE imgAttack[2][4];//攻击
+IMAGE imgGold[2];//金币图片
 int leftMargin = 10;//左边距
 int rightMargin = Width - 86;//右边距,人物宽度76+边距10
 int playerX, playerY;//玩家坐标
 int direction = 1;//玩家方向
 int speedX = 0, speedY = 0;//速度
+int gold = 0;//金币
+float playerBlood = 10;
+
 /***********************函数声明*************************/
 void town();
+void forest();
 void loadMain();
 
 int main()
 {
 	initgraph(Width, Height);
+	srand(time(NULL));
 	loadMain();
 	town();
-	_getch();
 	closegraph();
 	return 0;
 }
@@ -40,4 +45,7 @@ void loadMain()
 	loadimage(&imgAttack[1][2], _T("..\\images\\Character\\attack\\attack_13.bmp"));
 	loadimage(&imgAttack[0][3], _T("..\\images\\Character\\attack\\attack_04.bmp"));
 	loadimage(&imgAttack[1][3], _T("..\\images\\Character\\attack\\attack_14.bmp"));
+
+	loadimage(&imgGold[0], _T("..\\images\\other\\gold_0.png"));
+	loadimage(&imgGold[1], _T("..\\images\\other\\gold_1.png"));
 }
