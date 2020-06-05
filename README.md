@@ -5,6 +5,8 @@
 
 ##图片
 
-![城镇1](/images/Screenshot/town_1.png）
-![城镇2](/images/Screenshot/town_2.png）
-![森林](/images/Screenshot/forest.png）
+![image](https://github.com/wangzmgit/game-c/blob/master/images/Screenshot/town_1.png)
+
+![image](https://github.com/wangzmgit/game-c/blob/master/images/Screenshot/town_2.png)
+
+![image](https://github.com/wangzmgit/game-c/blob/master/images/Screenshot/forest.png)
